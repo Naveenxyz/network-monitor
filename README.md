@@ -1,19 +1,19 @@
-<h1>Network Monitoring Tool<h1>
+<h1>Network Monitoring Tool</h1>
 
 <p>In a network, there is one central PC (server) and all the other PCs in the network are monitored. All these PCs have USB connection, LAN connection and Internet connection. The tool should detect any connection made in real-time on the client PCs and also save the log of each PC. It is assumed all the PCs already know the IP address of the server.</p>
 <p><b>Language Used: </b>Python</p>
 <p><b>OS Requirement: </b> Any Linux Distribution</p>
 
 <h2>Running the Code</h2>
-<p>Download the entire repository locally<p>
-<p>Run server.py on the server PC</p>
-<p>On every other PC in the network which needs to be monitored, run main.py</p>
+<p>Download the entire repository locally.<p>
+<p>Run server.py on the server PC.</p>
+<p>On every other PC in the network which needs to be monitored, run main.py.</p>
 
 <h2>Working</h2>
 
 <h3>USB Transfer Detection</h3>
-<p>When a USB device is connected to a linux machine, a kernel event is triggered which a device manager called udev (userspace /dev) listens to and executes a bash script given below which logs into two different files which are log.txt and usb.log.</p>
-<p>Then a cron job is run every minute which calls a python script which checks for changes in usb.log and sends the data to the server in real time.</p>
+<p>When a USB device is connected to a linux machine, a kernel event is triggered which a device manager called udev (userspace /dev) listens to and executes the bash script usb_check.sh which logs into two different files which are log.txt and usb.log.</p>
+<p>Then a cron job is run every minute which calls the python script usb.py, which checks for changes in usb.log and sends the data to the server in real time.</p>
 <p>The  USB  event  is  logged  in  log.txt which  contains  the  log  of  all  the transfer events happening in the client PC.</p>
 
 <h3>Packet Sniffing</h3>
