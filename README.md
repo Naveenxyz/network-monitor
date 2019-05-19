@@ -1,12 +1,13 @@
 <h1>Network Monitoring Tool<h1>
-<p><b>Language Used:</b> Python</p>
-<p><b>OS Requirement: Any Linux Distribution</b></p>
-<h2>Aim:</h2>
-<p>In a network, there is one central PC (server) and all the other PCs are monitored. These PCs have USB connection, LAN connection and Internet connection. The tool detects any connection made in real-time and also stores a log of each PC.</p>
+
+<p>In a network, there is one central PC (server) and all the other PCs in the network are monitored. All these PCs have USB connection, LAN connection and Internet connection. The tool should detect any connection made in real-time on the client PCs and also save the log of each PC. It is assumed all the PCs already know the IP address of the server.</p>
+<p><b>Language Used: </b>Python</p>
+<p><b>OS Requirement: </b> Any Linux Distribution</p>
+
 <h2>Running the Code</h2>
 <p>Download the entire repository locally<p>
 <p>Run server.py on the server PC</p>
-<p>On every other PC which needs to be monitored, run main.py</p>
+<p>On every other PC in the network which needs to be monitored, run main.py</p>
 
 <h2>Working</h2>
 
@@ -27,4 +28,4 @@
 <h3>Internet Transfer Detection</h3>
 <p>If  the  TCP/UDP  packets  received  by  the  client  PC  are  in  the  port number 443 (default HTTPS port) or 80 (default HTTP port) and the destination IP is not from a private network, then the transfer is an internet transfer.</p>
 <p>The  IP  addresses   of  microservices   and  trackers   from  Microsoft, Amazon AWS, Google Cloud and Bharati Airtel are first filtered. These IP addresses are present directly in the Amazon Cloud website and are also filtered by observing the traffic manually. These IP families and stored in the file ip.txt.</p>
-<p>After   using   the   above   filters,   maximum   of   the   trackers   and microservices   were   removed.   The   IP   addresses   of   all   websites accessed  are  stored  in  log.txt  along  with  the  timestamp  in  each session.</p>
+<p>After   using   the   above   filters,   maximum   of   the   trackers   and microservices   are   removed.   The   IP   addresses   of   all   websites accessed  are  stored  in  log.txt  along  with  the  timestamp  in  each session.</p>
