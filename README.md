@@ -29,3 +29,44 @@
 <p>If  the  TCP/UDP  packets  received  by  the  client  PC  are  in  the  port number 443 (default HTTPS port) or 80 (default HTTP port) and the destination IP is not from a private network, then the transfer is an internet transfer.</p>
 <p>The  IP  addresses   of  microservices   and  trackers   from  Microsoft, Amazon AWS, Google Cloud and Bharati Airtel are first filtered. These IP addresses are present directly in the Amazon Cloud website and are also filtered by observing the traffic manually. These IP families and stored in the file ip.txt.</p>
 <p>After   using   the   above   filters,   maximum   of   the   trackers   and microservices   are   removed.   The   IP   addresses   of   all   websites accessed  are  stored  in  log.txt  along  with  the  timestamp  in  each session.</p>
+
+
+## Setup and working
+connect a pendrive and check for the udeve kernel event
+```bash
+udevadm monitor
+```
+after that look for device type and subsystem from the output of
+```bash
+udevadm info /dev/sdb
+```
+then we need to perform some action when a usb event is detected so we need to add a rule, gernarally on all GNU/Linux distributons it is stored in /etc/udev/rules.d or /etc/lib/udev/rules.d the rule file is conventionally started with a number and the rules are processed in a numeric order.
+
+create a new rule in one of the above directory and name it 99-usbdetect.rules 
+```bash
+SUBSYSTEM=="usb", ACTION=="add", ENV{DEVTYPE}=="usb_device", RUN+="/bin/usb_check.sh"
+```
+then type out the following command with super user privilages
+```bash
+udevadm control --reload
+```
+>the content must be simmilar with some changes depending on usb dasy chain or device id.
+
+for this to work you must first move the usb_check.sh to bin and change it's permissions or change the script addresss in the above rule itself
+```bash
+mv usb_check.sh /bin/
+chmod 751 /bon/usb_check.sh
+```
+
+for further reading refer the [udev page](https://wiki.archlinux.org/index.php/Udev) on [Arch wiki](https://wiki.archlinux.org/)  
+
+the above code just tells the system to execute the usb_check.sh shell script which makes a log of all the usb events but dose't upload automatically to the server, it maintains two different logs one for the usb and a total log of all the events happening in the system regarding network.
+
+the log.txt fiel esentially holds all of the logs so we need to push it to the server, we are doing it using a GNU utility called cron a shedule tasker, it calls a required task in periodically. for further reading refer the cron manual [cron manual](https://www.gnu.org/software/mcron/manual/html_node/Crontab-file.html)
+
+```bash
+crontab -l
+crontab -e
+* * * * * /usr/bin/python3 /path/to/usb.py
+```
+ the above thing executes every minute and checks for any changes in usb.log and sends them to server to check the changes
