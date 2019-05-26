@@ -55,7 +55,7 @@ udevadm control --reload
 for this to work you must first move the usb_check.sh to bin and change it's permissions or change the script addresss in the above rule itself
 ```bash
 mv usb_check.sh /bin/
-chmod 751 /bon/usb_check.sh
+chmod 751 /bin/usb_check.sh
 ```
 
 for further reading refer the [udev page](https://wiki.archlinux.org/index.php/Udev) on [Arch wiki](https://wiki.archlinux.org/)  
